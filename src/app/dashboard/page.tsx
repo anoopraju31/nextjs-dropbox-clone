@@ -5,9 +5,9 @@ const DashboardPage = () => {
 	const { userId } = auth()
 
 	return (
-		<div>
+		<main>
 			<Dropzone />
-		</div>
+		</main>
 	)
 }
 
