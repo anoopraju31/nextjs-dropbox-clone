@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
+import Header from '@/components/Header'
 
 type Props = {
 	children: React.ReactNode
@@ -20,7 +21,10 @@ export default function RootLayout(props: Props) {
 	return (
 		<ClerkProvider>
 			<html lang='en'>
-				<body className={inter.className}>{children}</body>
+				<body className={inter.className}>
+					<Header />
+					{children}
+				</body>
 			</html>
 		</ClerkProvider>
 	)
