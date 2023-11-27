@@ -1,7 +1,7 @@
 import { SignInButton, SignedOut, UserButton } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import { Button } from '@/components/ui/button'
 
 const Header = () => {
 	return (
@@ -27,6 +27,8 @@ const Header = () => {
 				<SignedOut>
 					<SignInButton afterSignInUrl='/dashboard' mode='modal' />
 				</SignedOut>
+
+				<Button variant='destructive'>Button</Button>
 			</div>
 		</header>
 	)
