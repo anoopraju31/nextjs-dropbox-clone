@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import Header from '@/components/Header'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 type Props = {
 	children: React.ReactNode
@@ -22,8 +23,14 @@ export default function RootLayout(props: Props) {
 		<ClerkProvider>
 			<html lang='en'>
 				<body className={inter.className}>
-					<Header />
-					{children}
+					<ThemeProvider
+						attribute='class'
+						defaultTheme='system'
+						enableSystem
+						disableTransitionOnChange>
+						<Header />
+						{children}
+					</ThemeProvider>
 				</body>
 			</html>
 		</ClerkProvider>
