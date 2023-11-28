@@ -35,15 +35,15 @@ A cutting-edge cloud storage solution, combining the power of Next.js with secur
 
 2. Clone The Repo.
   
-  ```bash
-    git clone https://github.com/anoopraju31/nextjs-dropbox-clone
-  ```
+    ```bash
+      git clone https://github.com/anoopraju31/nextjs-dropbox-clone
+    ```
 
 3. Install Dependencies
  
-  ```bash
-      npm install
-  ```    
+    ```bash
+        npm install
+    ```    
 
 4. Make a copy of the example environment variables file.
 
@@ -62,6 +62,6 @@ A cutting-edge cloud storage solution, combining the power of Next.js with secur
 
 8. Run Local
   
-    ```bash
-        npm run dev
-    ```
+      ```bash
+          npm run dev
+      ```
