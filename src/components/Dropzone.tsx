@@ -79,7 +79,7 @@ const Dropzone = () => {
 					<section className='m-4'>
 						<div
 							className={cn(
-								'w-full h-52 flex justify-center items-center p-5 border border-dashed rounded-lg text-center',
+								'w-full container h-52 flex justify-center items-center p-5 border border-dashed rounded-lg text-center',
 								isDragActive
 									? 'bg-[#035FFE] text-white animate-pulse'
 									: 'bg-slate-100/50 dark:bg-slate-800/80 text-slate-400',
