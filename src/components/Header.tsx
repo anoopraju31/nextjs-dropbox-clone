@@ -1,7 +1,8 @@
+'use client'
+
 import { SignInButton, SignedOut, UserButton } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import { ThemeToggle } from './ThemeToggler'
 
 const Header = () => {
@@ -29,8 +30,6 @@ const Header = () => {
 				<SignedOut>
 					<SignInButton afterSignInUrl='/dashboard' mode='modal' />
 				</SignedOut>
-
-				<Button variant='destructive'>Button</Button>
 			</div>
 		</header>
 	)
