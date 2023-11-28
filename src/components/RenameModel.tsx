@@ -2,7 +2,7 @@
 
 import { useUser } from '@clerk/nextjs'
 import { useAppStore } from '@/store/store'
-import { ChangeEvent, KeyboardEvent, useState } from 'react'
+import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
 import { doc, updateDoc } from 'firebase/firestore'
 import {
 	Dialog,
@@ -25,7 +25,11 @@ export function RenameModel() {
 			state.isRenameModelOpen,
 			state.setIsRenameModelOpen,
 		])
-	const [input, setInput] = useState<string>(filename || '')
+	const [input, setInput] = useState<string>(filename!)
+
+	useEffect(() => {
+		setInput(isRenameModelOpen ? filename! : '')
+	}, [isRenameModelOpen, filename])
 
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
 		setInput(e.target.value)
@@ -48,10 +52,10 @@ export function RenameModel() {
 		setInput('')
 	}
 
+	const handleOpenChange = (isOpen: boolean) => setIsRenameModelOpen(isOpen)
+
 	return (
-		<Dialog
-			open={isRenameModelOpen}
-			onOpenChange={(isOpen) => setIsRenameModelOpen(isOpen)}>
+		<Dialog open={isRenameModelOpen} onOpenChange={handleOpenChange}>
 			<DialogContent className='sm:max-w-md'>
 				<DialogHeader>
 					<DialogTitle> Are you sure you want to rename? </DialogTitle>
