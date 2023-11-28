@@ -44,6 +44,7 @@ A cutting-edge cloud storage solution, combining the power of Next.js with secur
 ```    
 
 4. Make a copy of the example environment variables file.
+
    On Linux systems: 
    ```bash
    $ cp .env.local.example .env.local
@@ -53,11 +54,11 @@ A cutting-edge cloud storage solution, combining the power of Next.js with secur
    $ copy .env.local.example .env.local
    ```
 
-5. Create a new project in [Clerk](https://dashboard.clerk.com/) and add the API Key to the newly created `.env.local` file.
+6. Create a new project in [Clerk](https://dashboard.clerk.com/) and add the API Key to the newly created `.env.local` file.
 
-6. Create a new project in [firebase](https://console.firebase.google.com/u/0/) and add the API Key to the newly created `.env.local` file.
+7. Create a new project in [firebase](https://console.firebase.google.com/u/0/) and add the API Key to the newly created `.env.local` file.
 
-7. Run Local
+8. Run Local
 ```bash
     npm run dev
 ```
