@@ -2,7 +2,7 @@
 
 A cutting-edge cloud storage solution, combining the power of Next.js with secure authentication, and seamless integration with cloud storage services. Users can confidently manage their files and experience a modern and responsive interface across devices.
 
-    ![Dropbox Clone](https://github.com/anoopraju31/nextjs-dropbox-clone/blob/master/demoImage/homepage.png)
+![Dropbox Clone](https://github.com/anoopraju31/nextjs-dropbox-clone/blob/master/demoImage/homepage.png)
 
 ## Features
 - Upload various file types to Firebase Storage, emulating Dropbox functionality.
