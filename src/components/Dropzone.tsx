@@ -65,7 +65,7 @@ const Dropzone = () => {
 		<DropzoneComponent
 			minSize={0}
 			maxSize={maxSize}
-			onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
+			onDrop={(acceptedFiles) => onDrop(acceptedFiles)}>
 			{({
 				getRootProps,
 				getInputProps,
