@@ -34,16 +34,14 @@ export function DeleteModel() {
 
 		await deleteObject(fileRef)
 			.then(async () => {
-				deleteDoc(doc(db, 'users', user.id, 'files', fileId))
-					.then(() => {
-						console.log('File Deleted!')
+				deleteDoc(doc(db, 'users', user.id, 'files', fileId)).catch((error) => {
+					console.log(error)
+
+					toast({
+						variant: 'destructive',
+						title: 'Something Went Wrong!',
 					})
-					.catch((error) => {
-						toast({
-							variant: 'destructive',
-							title: 'Something Went Wrong!',
-						})
-					})
+				})
 			})
 			.then(() => {
 				toast({
@@ -52,6 +50,8 @@ export function DeleteModel() {
 				})
 			})
 			.catch((error) => {
+				console.log(error)
+
 				toast({
 					variant: 'destructive',
 					title: 'Something Went Wrong!',
