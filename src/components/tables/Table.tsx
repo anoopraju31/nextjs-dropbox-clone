@@ -55,6 +55,9 @@ export function DataTable<TData, TValue>({
 
 	return (
 		<div className='rounded-md border'>
+			<DeleteModel />
+			<RenameModel />
+
 			<Table>
 				<TableHeader>
 					{table.getHeaderGroups().map((headerGroup) => (
@@ -80,9 +83,6 @@ export function DataTable<TData, TValue>({
 							<TableRow
 								key={row.id}
 								data-state={row.getIsSelected() && 'selected'}>
-								<DeleteModel />
-								<RenameModel />
-
 								{row.getVisibleCells().map((cell) => (
 									<TableCell key={cell.id}>
 										{cell.column.id === 'timestamp' ? (
