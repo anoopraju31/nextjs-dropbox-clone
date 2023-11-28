@@ -68,6 +68,7 @@ export function DeleteModel() {
 
 					<Button
 						type='submit'
+						variant='destructive'
 						size='sm'
 						className='px-3 flex-1'
 						onClick={deleteFile}>
