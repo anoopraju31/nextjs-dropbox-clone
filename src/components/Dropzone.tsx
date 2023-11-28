@@ -4,6 +4,15 @@ import { useState } from 'react'
 import { useUser } from '@clerk/nextjs'
 import DropzoneComponent from 'react-dropzone'
 import { cn } from '@/lib/utils'
+import {
+	addDoc,
+	collection,
+	doc,
+	serverTimestamp,
+	updateDoc,
+} from 'firebase/firestore'
+import { db, storage } from '../../firebase'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 
 const Dropzone = () => {
 	const [loading, setLoading] = useState<boolean>(false)
@@ -29,7 +38,25 @@ const Dropzone = () => {
 
 		setLoading(true)
 
-		//  DO WHAT NEEDS TO BE DONE...
+		const docRef = await addDoc(collection(db, 'users', user.id, 'files'), {
+			userId: user.id,
+			filename: selectedFile.name,
+			fullName: user.fullName,
+			profileImg: user.imageUrl,
+			timestamp: serverTimestamp(),
+			type: selectedFile.type,
+			size: selectedFile.size,
+		})
+
+		const imageRef = ref(storage, `users/${user.id}/files/${docRef.id}`)
+
+		uploadBytes(imageRef, selectedFile).then(async () => {
+			const downloadUrl = await getDownloadURL(imageRef)
+
+			await updateDoc(doc(db, 'users', user.id, 'files', docRef.id), {
+				downloadUrl,
+			})
+		})
 
 		setLoading(false)
 	}
