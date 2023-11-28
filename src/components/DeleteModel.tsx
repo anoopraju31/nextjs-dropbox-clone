@@ -1,11 +1,6 @@
 'use client'
 
-import { useUser } from '@clerk/nextjs'
-import { useAppStore } from '@/store/store'
-import { useToast } from './ui/use-toast'
-import { deleteDoc, doc } from 'firebase/firestore'
-import { deleteObject, ref } from 'firebase/storage'
-import { db, storage } from '../../firebase'
+import useDeleteFile from '@/hooks/useDeleteFile'
 import { Button } from '@/components/ui/button'
 import {
 	Dialog,
@@ -17,48 +12,8 @@ import {
 } from '@/components/ui/dialog'
 
 export function DeleteModel() {
-	const { user } = useUser()
-	const [fileId, isDeleteModelOpen, setIsDeleteModelOpen] = useAppStore(
-		(state) => [
-			state.fileId,
-			state.isDeleteModelOpen,
-			state.setIsDeleteModelOpen,
-		],
-	)
-	const { toast } = useToast()
-
-	async function deleteFile() {
-		if (!user || !fileId) return
-
-		const fileRef = ref(storage, `users/${user.id}/files/${fileId}`)
-
-		await deleteObject(fileRef)
-			.then(async () => {
-				deleteDoc(doc(db, 'users', user.id, 'files', fileId)).catch((error) => {
-					console.log(error)
-
-					toast({
-						variant: 'destructive',
-						title: 'Something Went Wrong!',
-					})
-				})
-			})
-			.then(() => {
-				toast({
-					title: 'Deleted file successfully!',
-					className: 'bg-green-500',
-				})
-			})
-			.catch((error) => {
-				console.log(error)
-
-				toast({
-					variant: 'destructive',
-					title: 'Something Went Wrong!',
-				})
-			})
-			.finally(() => setIsDeleteModelOpen(false))
-	}
+	const { isDeleteModelOpen, setIsDeleteModelOpen, deleteFile } =
+		useDeleteFile()
 
 	return (
 		<Dialog
@@ -74,6 +29,7 @@ export function DeleteModel() {
 				</DialogHeader>
 
 				<DialogFooter className='flex space-x-2 py-3'>
+					{/* Cancel Button */}
 					<Button
 						size='sm'
 						className='px-3 flex-1'
@@ -83,6 +39,7 @@ export function DeleteModel() {
 						<span> Cancel </span>
 					</Button>
 
+					{/* Delete Button */}
 					<Button
 						type='submit'
 						variant='destructive'
