@@ -9,6 +9,7 @@ import { db } from '../../../firebase'
 import { Button } from '../ui/button'
 import { DataTable } from './Table'
 import { columns } from './columns'
+import TableSkeleton from './TableSkeleton'
 
 type Props = {
 	skeletonFiles: FileType[]
@@ -48,33 +49,10 @@ const TableWrapper = (props: Props) => {
 	// Skeleton UI
 	if (docs?.docs.length === undefined)
 		return (
-			<div className='flex flex-col'>
-				<Button variant='outline' className='ml-auto w-36 h-10 mb-5'>
-					<Skeleton className='w-full h-5' />
-				</Button>
-
-				<div className='border rounded-lg'>
-					<div className='border-b h-12' />
-
-					{/* Files exists */}
-					{skeletonFiles.map((file) => (
-						<div
-							key={file.id}
-							className='flex items-center space-x-4 p-5 w-full'>
-							<Skeleton className='w-12 h-12' />
-							<Skeleton className='w-full h-12' />
-						</div>
-					))}
-
-					{/* No Files */}
-					{setInitialFiles.length === 0 && (
-						<div className='flex items-center space-x-4 p-5 w-full'>
-							<Skeleton className='w-12 h-12' />
-							<Skeleton className='w-full h-12' />
-						</div>
-					)}
-				</div>
-			</div>
+			<TableSkeleton
+				initialFiles={initialFiles.length}
+				skeletonFiles={skeletonFiles}
+			/>
 		)
 
 	return (
