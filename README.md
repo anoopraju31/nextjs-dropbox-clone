@@ -34,14 +34,14 @@ A cutting-edge cloud storage solution, combining the power of Next.js with secur
 1. If you don’t have Node.js installed, [install it from here](https://nodejs.org/en/) (Node.js version >= 18.12.0 required).
 
 2. Clone The Repo.
-```bash
-  git clone https://github.com/anoopraju31/nextjs-dropbox-clone
-```
+  ```bash
+    git clone https://github.com/anoopraju31/nextjs-dropbox-clone
+  ```
 
 3. Install Dependencies
-```bash
-    npm install
-```    
+  ```bash
+      npm install
+  ```    
 
 4. Make a copy of the example environment variables file.
 
@@ -59,6 +59,6 @@ A cutting-edge cloud storage solution, combining the power of Next.js with secur
 7. Create a new project in [firebase](https://console.firebase.google.com/u/0/) and add the API Key to the newly created `.env.local` file.
 
 8. Run Local
-```bash
-    npm run dev
-```
+  ```bash
+      npm run dev
+  ```
