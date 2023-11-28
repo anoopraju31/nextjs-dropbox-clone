@@ -2,6 +2,7 @@ import Dropzone from '@/components/Dropzone'
 import { auth } from '@clerk/nextjs'
 import { collection, getDocs } from 'firebase/firestore'
 import { db } from '../../../firebase'
+import TableWrapper from '@/components/tables/TableWrapper'
 
 const DashboardPage = async () => {
 	const { userId } = auth()
@@ -16,11 +17,18 @@ const DashboardPage = async () => {
 		type: doc.data().type,
 	}))
 
-	console.log(skeletonFiles)
-
 	return (
-		<main>
+		<main className='border-t'>
 			<Dropzone />
+
+			<section className='container space-y-5'>
+				<h2 className='font-bold'> All Files </h2>
+
+				<div className=''>
+					{/* TableWrapper */}
+					<TableWrapper skeletonFiles={skeletonFiles} />
+				</div>
+			</section>
 		</main>
 	)
 }
