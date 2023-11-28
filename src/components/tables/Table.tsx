@@ -1,12 +1,13 @@
 'use client'
 
+import { useAppStore } from '@/store/store'
 import {
 	ColumnDef,
 	flexRender,
 	getCoreRowModel,
 	useReactTable,
 } from '@tanstack/react-table'
-
+import { PencilIcon, TrashIcon } from 'lucide-react'
 import {
 	Table,
 	TableBody,
@@ -16,9 +17,8 @@ import {
 	TableRow,
 } from '@/components/ui/table'
 import { Button } from '../ui/button'
-import { PencilIcon, TrashIcon } from 'lucide-react'
-import { useAppStore } from '@/store/store'
 import { DeleteModel } from '../DeleteModel'
+import { RenameModel } from '../RenameModel'
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[]
@@ -81,6 +81,7 @@ export function DataTable<TData, TValue>({
 								key={row.id}
 								data-state={row.getIsSelected() && 'selected'}>
 								<DeleteModel />
+								<RenameModel />
 
 								{row.getVisibleCells().map((cell) => (
 									<TableCell key={cell.id}>
@@ -95,7 +96,8 @@ export function DataTable<TData, TValue>({
 												</div>
 											</div>
 										) : cell.column.id === 'filename' ? (
-											<p
+											<Button
+												variant='link'
 												className='underline flex items-center text-blue-500 hover:cursor-pointer'
 												onClick={() => {
 													openRenameModel(
@@ -105,7 +107,7 @@ export function DataTable<TData, TValue>({
 												}}>
 												{cell.getValue() as string}{' '}
 												<PencilIcon size={15} className='ml-2' />
-											</p>
+											</Button>
 										) : (
 											flexRender(cell.column.columnDef.cell, cell.getContext())
 										)}
@@ -113,7 +115,7 @@ export function DataTable<TData, TValue>({
 								))}
 								<TableCell key={(row.original as FileType).id}>
 									<Button
-										variant='outline'
+										variant='destructive'
 										onClick={() => {
 											openDeleteModel((row.original as FileType).id)
 										}}>
