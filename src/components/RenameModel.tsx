@@ -3,6 +3,7 @@
 import { useUser } from '@clerk/nextjs'
 import { useAppStore } from '@/store/store'
 import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
+import { useToast } from './ui/use-toast'
 import { doc, updateDoc } from 'firebase/firestore'
 import {
 	Dialog,
@@ -26,6 +27,7 @@ export function RenameModel() {
 			state.setIsRenameModelOpen,
 		])
 	const [input, setInput] = useState<string>(filename!)
+	const { toast } = useToast()
 
 	useEffect(() => {
 		setInput(isRenameModelOpen ? filename! : '')
@@ -42,14 +44,22 @@ export function RenameModel() {
 		try {
 			await updateDoc(doc(db, 'users', user.id, 'files', fileId), {
 				filename: input,
+			}).then(() => {
+				toast({
+					title: 'Renamed file successfully!',
+					className: 'bg-green-600',
+				})
 			})
 		} catch (error) {
 			console.log(error)
+			toast({
+				variant: 'destructive',
+				title: 'Something Went Wrong!',
+			})
 		} finally {
+			setInput('')
 			setIsRenameModelOpen(false)
 		}
-
-		setInput('')
 	}
 
 	const handleOpenChange = (isOpen: boolean) => setIsRenameModelOpen(isOpen)
