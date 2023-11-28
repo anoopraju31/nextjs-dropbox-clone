@@ -4,6 +4,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 import Header from '@/components/Header'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import { Toaster } from '@/components/ui/toaster'
 
 type Props = {
 	children: React.ReactNode
@@ -30,6 +31,7 @@ export default function RootLayout(props: Props) {
 						disableTransitionOnChange>
 						<Header />
 						{children}
+						<Toaster />
 					</ThemeProvider>
 				</body>
 			</html>
