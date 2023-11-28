@@ -1,6 +1,10 @@
 'use client'
 
+import { useUser } from '@clerk/nextjs'
 import { useAppStore } from '@/store/store'
+import { deleteDoc, doc } from 'firebase/firestore'
+import { deleteObject, ref } from 'firebase/storage'
+import { db, storage } from '../../firebase'
 import { Button } from '@/components/ui/button'
 import {
 	Dialog,
@@ -12,6 +16,7 @@ import {
 } from '@/components/ui/dialog'
 
 export function DeleteModel() {
+	const { user } = useUser()
 	const [fileId, isDeleteModelOpen, setIsDeleteModelOpen] = useAppStore(
 		(state) => [
 			state.fileId,
@@ -21,7 +26,21 @@ export function DeleteModel() {
 	)
 
 	async function deleteFile() {
-		setIsDeleteModelOpen(false)
+		if (!user || !fileId) return
+
+		const fileRef = ref(storage, `users/${user.id}/files/${fileId}`)
+
+		try {
+			await deleteObject(fileRef).then(async () => {
+				deleteDoc(doc(db, 'users', user.id, 'files', fileId)).then(() => {
+					console.log('File Deleted!')
+				})
+			})
+		} catch (error) {
+			console.log(error)
+		} finally {
+			setIsDeleteModelOpen(false)
+		}
 	}
 
 	return (
