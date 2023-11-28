@@ -14,6 +14,7 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
+import { useToast } from './ui/use-toast'
 
 export function DeleteModel() {
 	const { user } = useUser()
@@ -24,23 +25,39 @@ export function DeleteModel() {
 			state.setIsDeleteModelOpen,
 		],
 	)
+	const { toast } = useToast()
 
 	async function deleteFile() {
 		if (!user || !fileId) return
 
 		const fileRef = ref(storage, `users/${user.id}/files/${fileId}`)
 
-		try {
-			await deleteObject(fileRef).then(async () => {
-				deleteDoc(doc(db, 'users', user.id, 'files', fileId)).then(() => {
-					console.log('File Deleted!')
+		await deleteObject(fileRef)
+			.then(async () => {
+				deleteDoc(doc(db, 'users', user.id, 'files', fileId))
+					.then(() => {
+						console.log('File Deleted!')
+					})
+					.catch((error) => {
+						toast({
+							variant: 'destructive',
+							title: 'Something Went Wrong!',
+						})
+					})
+			})
+			.then(() => {
+				toast({
+					title: 'Deleted file successfully!',
+					className: 'bg-green-500',
 				})
 			})
-		} catch (error) {
-			console.log(error)
-		} finally {
-			setIsDeleteModelOpen(false)
-		}
+			.catch((error) => {
+				toast({
+					variant: 'destructive',
+					title: 'Something Went Wrong!',
+				})
+			})
+			.finally(() => setIsDeleteModelOpen(false))
 	}
 
 	return (
