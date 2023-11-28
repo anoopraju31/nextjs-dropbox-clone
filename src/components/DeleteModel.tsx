@@ -4,13 +4,11 @@ import { useAppStore } from '@/store/store'
 import { Button } from '@/components/ui/button'
 import {
 	Dialog,
-	DialogClose,
 	DialogContent,
 	DialogDescription,
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
-	DialogTrigger,
 } from '@/components/ui/dialog'
 
 export function DeleteModel() {
@@ -22,7 +20,9 @@ export function DeleteModel() {
 		],
 	)
 
-	async function deleteFile() {}
+	async function deleteFile() {
+		setIsDeleteModelOpen(false)
+	}
 
 	return (
 		<Dialog
@@ -37,7 +37,7 @@ export function DeleteModel() {
 					</DialogDescription>
 				</DialogHeader>
 
-				<div className='flex space-x-2 py-3'>
+				<DialogFooter className='flex space-x-2 py-3'>
 					<Button
 						size='sm'
 						className='px-3 flex-1'
@@ -51,11 +51,11 @@ export function DeleteModel() {
 						type='submit'
 						size='sm'
 						className='px-3 flex-1'
-						onClick={() => {}}>
+						onClick={deleteFile}>
 						<span className='sr-only'> Delete </span>
 						<span> Delete </span>
 					</Button>
-				</div>
+				</DialogFooter>
 			</DialogContent>
 		</Dialog>
 	)
