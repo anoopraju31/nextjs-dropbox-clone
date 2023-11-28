@@ -74,6 +74,7 @@ export function DataTable<TData, TValue>({
 									</TableHead>
 								)
 							})}
+							<TableHead key='delete'> Delete </TableHead>
 						</TableRow>
 					))}
 				</TableHeader>
