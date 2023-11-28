@@ -2,6 +2,7 @@
 
 import { useUser } from '@clerk/nextjs'
 import { useAppStore } from '@/store/store'
+import { useToast } from './ui/use-toast'
 import { deleteDoc, doc } from 'firebase/firestore'
 import { deleteObject, ref } from 'firebase/storage'
 import { db, storage } from '../../firebase'
@@ -14,7 +15,6 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
-import { useToast } from './ui/use-toast'
 
 export function DeleteModel() {
 	const { user } = useUser()
