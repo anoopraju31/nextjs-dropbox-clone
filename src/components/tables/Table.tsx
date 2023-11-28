@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/table'
 import { Button } from '../ui/button'
 import { PencilIcon, TrashIcon } from 'lucide-react'
+import { useAppStore } from '@/store/store'
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[]
@@ -32,6 +33,24 @@ export function DataTable<TData, TValue>({
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 	})
+	const [setFileId, setFilename, setIsDeleteModelOpen, setIsRenameModelOpen] =
+		useAppStore((state) => [
+			state.setFileId,
+			state.setFilename,
+			state.setIsDeleteModelOpen,
+			state.setIsRenameModelOpen,
+		])
+
+	const openDeleteModel = (fieldId: string) => {
+		setFileId(fieldId)
+		setIsDeleteModelOpen(true)
+	}
+
+	const openRenameModel = (fieldId: string, filename: string) => {
+		setFileId(fieldId)
+		setFilename(filename)
+		setIsRenameModelOpen(true)
+	}
 
 	return (
 		<div className='rounded-md border'>
@@ -76,7 +95,10 @@ export function DataTable<TData, TValue>({
 											<p
 												className='underline flex items-center text-blue-500 hover:cursor-pointer'
 												onClick={() => {
-													console.log('Edit file name!')
+													openRenameModel(
+														(row.original as FileType).id,
+														(row.original as FileType).filename,
+													)
 												}}>
 												{cell.getValue() as string}{' '}
 												<PencilIcon size={15} className='ml-2' />
@@ -90,7 +112,7 @@ export function DataTable<TData, TValue>({
 									<Button
 										variant='outline'
 										onClick={() => {
-											console.log('delete button clicked!')
+											openDeleteModel((row.original as FileType).id)
 										}}>
 										<TrashIcon size={20} />
 									</Button>
