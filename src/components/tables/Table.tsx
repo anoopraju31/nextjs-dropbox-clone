@@ -18,6 +18,7 @@ import {
 import { Button } from '../ui/button'
 import { PencilIcon, TrashIcon } from 'lucide-react'
 import { useAppStore } from '@/store/store'
+import { DeleteModel } from '../DeleteModel'
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[]
@@ -79,6 +80,8 @@ export function DataTable<TData, TValue>({
 							<TableRow
 								key={row.id}
 								data-state={row.getIsSelected() && 'selected'}>
+								<DeleteModel />
+
 								{row.getVisibleCells().map((cell) => (
 									<TableCell key={cell.id}>
 										{cell.column.id === 'timestamp' ? (
