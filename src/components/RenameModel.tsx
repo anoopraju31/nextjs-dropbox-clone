@@ -1,10 +1,6 @@
 'use client'
 
-import { useUser } from '@clerk/nextjs'
-import { useAppStore } from '@/store/store'
-import { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react'
-import { useToast } from './ui/use-toast'
-import { doc, updateDoc } from 'firebase/firestore'
+import useRenameFile from '@/hooks/useRenameFile'
 import {
 	Dialog,
 	DialogContent,
@@ -12,57 +8,20 @@ import {
 	DialogHeader,
 	DialogTitle,
 } from '@/components/ui/dialog'
-import { db } from '../../firebase'
 import { Button } from './ui/button'
 import { Label } from './ui/label'
 import { Input } from './ui/input'
 
 export function RenameModel() {
-	const { user } = useUser()
-	const [fileId, filename, isRenameModelOpen, setIsRenameModelOpen] =
-		useAppStore((state) => [
-			state.fileId,
-			state.filename,
-			state.isRenameModelOpen,
-			state.setIsRenameModelOpen,
-		])
-	const [input, setInput] = useState<string>(filename!)
-	const { toast } = useToast()
-
-	useEffect(() => {
-		setInput(isRenameModelOpen ? filename! : '')
-	}, [isRenameModelOpen, filename])
-
-	const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
-		setInput(e.target.value)
-	const handleKeyDownCapture = (e: KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === 'Enter') renameFile()
-	}
-	const renameFile = async () => {
-		if (!user || !fileId || !filename || !input) return
-
-		try {
-			await updateDoc(doc(db, 'users', user.id, 'files', fileId), {
-				filename: input,
-			}).then(() => {
-				toast({
-					title: 'Renamed file successfully!',
-					className: 'bg-green-600',
-				})
-			})
-		} catch (error) {
-			console.log(error)
-			toast({
-				variant: 'destructive',
-				title: 'Something Went Wrong!',
-			})
-		} finally {
-			setInput('')
-			setIsRenameModelOpen(false)
-		}
-	}
-
-	const handleOpenChange = (isOpen: boolean) => setIsRenameModelOpen(isOpen)
+	const {
+		isRenameModelOpen,
+		handleOpenChange,
+		input,
+		handleChange,
+		handleKeyDownCapture,
+		handleClose,
+		renameFile,
+	} = useRenameFile()
 
 	return (
 		<Dialog open={isRenameModelOpen} onOpenChange={handleOpenChange}>
@@ -88,7 +47,7 @@ export function RenameModel() {
 						size='sm'
 						className='px-3 flex-1'
 						variant='ghost'
-						onClick={() => setIsRenameModelOpen(false)}>
+						onClick={handleClose}>
 						<span className='sr-only'> Cancel </span>
 						<span> Cancel </span>
 					</Button>
